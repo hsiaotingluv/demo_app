@@ -31,7 +31,7 @@ class _EventPageState extends State<EventPage> {
 
     if (widget.event == null) {
       fromDate = widget.selectedDay;
-      toDate = widget.selectedDay.add(Duration(hours: 2));
+      toDate = widget.selectedDay.add(const Duration(hours: 2));
     }
   }
 
@@ -94,40 +94,40 @@ class _EventPageState extends State<EventPage> {
   // event ending date and time
   Widget buildFromAndTo() =>
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('FROM', style: TextStyle(fontWeight: FontWeight.bold)),
+        const Text('FROM', style: TextStyle(fontWeight: FontWeight.bold)),
         Row(
           children: [
             Expanded(
               flex: 2,
               child: buildDropDownField(
-                text: Utils.toDate(fromDate),
+                text: Utils.extractDate(fromDate),
                 onClicked: () => pickFromDateTime(isDate: true),
               ),
             ),
             if (!isWholeDay)
               Expanded(
                 child: buildDropDownField(
-                  text: Utils.toTime(fromDate),
+                  text: Utils.extractTime(fromDate),
                   onClicked: () => pickFromDateTime(isDate: false),
                 ),
               ),
           ],
         ),
-        Text('TO', style: TextStyle(fontWeight: FontWeight.bold)),
+        const Text('TO', style: TextStyle(fontWeight: FontWeight.bold)),
         Row(
           children: [
             Expanded(
               flex: 2,
               child: buildDropDownField(
-                text: Utils.toDate(toDate),
+                text: Utils.extractDate(toDate),
                 onClicked: () => pickToDateTime(isDate: true),
               ),
             ),
             if (!isWholeDay)
               Expanded(
                 child: buildDropDownField(
-                  text: Utils.toTime(fromDate),
-                  onClicked: () => pickFromDateTime(isDate: false),
+                  text: Utils.extractTime(toDate),
+                  onClicked: () => pickToDateTime(isDate: false),
                 ),
               ),
           ],
@@ -141,7 +141,7 @@ class _EventPageState extends State<EventPage> {
   }) =>
       ListTile(
         title: Text(text),
-        trailing: Icon(Icons.arrow_drop_down),
+        trailing: const Icon(Icons.arrow_drop_down),
         onTap: onClicked,
       );
 
@@ -154,8 +154,13 @@ class _EventPageState extends State<EventPage> {
     if (date == null) return;
 
     if (date.isAfter(toDate)) {
-      toDate =
-          DateTime(date.year, date.month, date.day, date.hour, date.minute);
+      toDate = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        date.hour,
+        date.minute,
+      );
     }
 
     setState(() => fromDate = date);
@@ -190,13 +195,14 @@ class _EventPageState extends State<EventPage> {
 
       if (date == null) return null;
 
-      final time =
-          Duration(hours: initialDate.hour, minutes: initialDate.minute);
+      final time = Duration(
+        hours: initialDate.hour,
+        minutes: initialDate.minute,
+      );
 
       return date.add(time);
-
-      // pick a time
     } else {
+      // pick a time
       final timeOfDay = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.fromDateTime(initialDate),
@@ -204,9 +210,16 @@ class _EventPageState extends State<EventPage> {
 
       if (timeOfDay == null) return null;
 
-      final date =
-          DateTime(initialDate.year, initialDate.month, initialDate.day);
-      final time = Duration(hours: timeOfDay.hour, minutes: timeOfDay.minute);
+      final date = DateTime(
+        initialDate.year,
+        initialDate.month,
+        initialDate.day,
+      );
+
+      final time = Duration(
+        hours: timeOfDay.hour,
+        minutes: timeOfDay.minute,
+      );
 
       return date.add(time);
     }

@@ -12,46 +12,45 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+  final CalendarController _dayTimelineController = CalendarController();
+
   @override
   Widget build(BuildContext context) {
-    final events = Provider.of<EventProvider>(context).events;
-    DateTime selectedDate = DateTime.now();
+    final provider = Provider.of<EventProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Calendar'),
+        title: const Text('Calendar'),
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
       body: Column(
         children: [
-          SfCalendar(
-            view: CalendarView.month,
-            dataSource: EventDataSource(events),
-            initialSelectedDate: DateTime.now(),
-            cellBorderColor: Colors.transparent,
-            onTap: (details) {
-              final provider =
-                  Provider.of<EventProvider>(context, listen: false);
-              provider.setDate(details.date!);
-              setState(() {
-                selectedDate = details.date!;
-              });
-            },
+          Expanded(
+            child: SfCalendar(
+              view: CalendarView.month,
+              dataSource: EventDataSource(provider.events),
+              initialSelectedDate: DateTime.now(),
+              cellBorderColor: Colors.transparent,
+              onTap: (CalendarTapDetails details) {
+                provider.setDate = details.date!;
+                _dayTimelineController.displayDate = details.date!;
+              },
+            ),
           ),
-          SizedBox(height: 12.0),
-          Tasks()
+          const SizedBox(height: 12.0),
+          Expanded(child: Tasks(_dayTimelineController)),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EventPage(selectedDay: selectedDate),
+            builder: (context) => EventPage(selectedDay: provider.selectedDate),
           ),
         ),
-        label: Text("Add Event"),
-        icon: Icon(Icons.add),
+        label: const Text("Add Event"),
+        icon: const Icon(Icons.add),
       ),
     );
   }

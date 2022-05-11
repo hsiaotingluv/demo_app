@@ -40,6 +40,7 @@ dependencies:
   #state management
   provider: ^5.0.0
   syncfusion_flutter_calendar: ^20.1.52
+  shared_preferences: ^2.0.14
 
 dev_dependencies:
   flutter_test:

@@ -8,16 +8,12 @@ class Utils {
     return '$date $time';
   }
 
-  static String toDate(DateTime dateTime) {
-    final date = DateFormat.yMMMEd().format(dateTime);
-
-    return '$date';
+  static String extractDate(DateTime dateTime) {
+    return DateFormat.yMMMEd().format(dateTime);
   }
 
-  static String toTime(DateTime dateTime) {
-    final time = DateFormat.Hm().format(dateTime);
-
-    return '$time';
+  static String extractTime(DateTime dateTime) {
+    return DateFormat.Hm().format(dateTime);
   }
 
   static DateTime removeTime(DateTime dateTime) =>

@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class Tasks extends StatefulWidget {
-  const Tasks({Key? key}) : super(key: key);
+  final CalendarController _controller;
+
+  const Tasks(this._controller, {Key? key}) : super(key: key);
 
   @override
   State<Tasks> createState() => _TasksState();
@@ -21,12 +23,13 @@ class _TasksState extends State<Tasks> {
       return Center(
         child: Text(
           'No Events found!',
-          style: TextStyle(color: Colors.black, fontSize: 24),
+          style: TextStyle(color: Colors.black),
         ),
       );
     }
 
     return SfCalendar(
+      controller: widget._controller,
       view: CalendarView.timelineDay,
       dataSource: EventDataSource(provider.eventsOfSelectedDate),
       initialDisplayDate: provider.selectedDate,
@@ -57,14 +60,16 @@ class _TasksState extends State<Tasks> {
         color: event.backgroundColor.withOpacity(0.5),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Text(event.title,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          )),
+      child: Text(
+        event.title,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
