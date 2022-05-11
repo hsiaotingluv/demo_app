@@ -10,6 +10,7 @@ class CalendarPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final events = Provider.of<EventProvider>(context).events;
+    DateTime selectedDate = DateTime.now();
 
     return Scaffold(
       appBar: AppBar(
@@ -28,6 +29,7 @@ class CalendarPage extends StatelessWidget {
               final provider =
                   Provider.of<EventProvider>(context, listen: false);
               provider.setDate(details.date!);
+              selectedDate = details.date!;
               showModalBottomSheet(
                 context: context,
                 builder: (context) => Tasks(),
@@ -40,7 +42,7 @@ class CalendarPage extends StatelessWidget {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EventPage(selectedDay: DateTime.now()),
+            builder: (context) => EventPage(selectedDay: selectedDate),
           ),
         ),
         label: Text("Add Event"),

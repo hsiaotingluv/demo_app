@@ -31,7 +31,7 @@ class _EventPageState extends State<EventPage> {
 
     if (widget.event == null) {
       fromDate = widget.selectedDay;
-      toDate = DateTime.now().add(Duration(hours: 2));
+      toDate = widget.selectedDay.add(Duration(hours: 2));
     }
   }
 

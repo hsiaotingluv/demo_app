@@ -15,7 +15,7 @@ class NavigationDrawerWidget extends StatelessWidget {
               padding: padding,
               child: Column(
                 children: [
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 50),
                   buildMenuItem(
                     text: 'Calendar',
                     icon: Icons.calendar_month,
