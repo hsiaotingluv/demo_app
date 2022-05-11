@@ -1,5 +1,4 @@
 import 'package:demo_app/model/event.dart';
-import 'package:demo_app/utils.dart';
 import 'package:flutter/cupertino.dart';
 
 class EventProvider extends ChangeNotifier {

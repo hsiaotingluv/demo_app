@@ -1,6 +1,5 @@
 import 'package:demo_app/provider/event_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:demo_app/widget/navigation_drawer_widget.dart';
 import 'package:provider/provider.dart';
 

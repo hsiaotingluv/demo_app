@@ -69,7 +69,7 @@ class _EventPageState extends State<EventPage> {
                     controller: titleController,
                   ),
                   SizedBox(height: 12),
-                  isWholeDay ? buildOn() : buildFromAndTo(),
+                  buildFromAndTo(),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
                     title: Text("Whole Day"),
@@ -91,23 +91,6 @@ class _EventPageState extends State<EventPage> {
             )),
       );
 
-  // event starting date and time
-  Widget buildOn() =>
-      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text('ON', style: TextStyle(fontWeight: FontWeight.bold)),
-        Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: buildDropDownField(
-                text: Utils.toDate(fromDate),
-                onClicked: () => pickFromDateTime(isDate: true),
-              ),
-            ),
-          ],
-        ),
-      ]);
-
   // event ending date and time
   Widget buildFromAndTo() =>
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -121,12 +104,13 @@ class _EventPageState extends State<EventPage> {
                 onClicked: () => pickFromDateTime(isDate: true),
               ),
             ),
-            Expanded(
-              child: buildDropDownField(
-                text: Utils.toTime(fromDate),
-                onClicked: () => pickFromDateTime(isDate: false),
+            if (!isWholeDay)
+              Expanded(
+                child: buildDropDownField(
+                  text: Utils.toTime(fromDate),
+                  onClicked: () => pickFromDateTime(isDate: false),
+                ),
               ),
-            ),
           ],
         ),
         Text('TO', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -139,12 +123,13 @@ class _EventPageState extends State<EventPage> {
                 onClicked: () => pickToDateTime(isDate: true),
               ),
             ),
-            Expanded(
-              child: buildDropDownField(
-                text: Utils.toTime(toDate),
-                onClicked: () => pickToDateTime(isDate: false),
+            if (!isWholeDay)
+              Expanded(
+                child: buildDropDownField(
+                  text: Utils.toTime(fromDate),
+                  onClicked: () => pickFromDateTime(isDate: false),
+                ),
               ),
-            ),
           ],
         ),
       ]);

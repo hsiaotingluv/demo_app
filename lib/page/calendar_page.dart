@@ -6,7 +6,12 @@ import 'package:demo_app/page/event_page.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:demo_app/model/event_data_source.dart';
 
-class CalendarPage extends StatelessWidget {
+class CalendarPage extends StatefulWidget {
+  @override
+  State<CalendarPage> createState() => _CalendarPageState();
+}
+
+class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     final events = Provider.of<EventProvider>(context).events;
@@ -29,13 +34,13 @@ class CalendarPage extends StatelessWidget {
               final provider =
                   Provider.of<EventProvider>(context, listen: false);
               provider.setDate(details.date!);
-              selectedDate = details.date!;
-              showModalBottomSheet(
-                context: context,
-                builder: (context) => Tasks(),
-              );
+              setState(() {
+                selectedDate = details.date!;
+              });
             },
           ),
+          SizedBox(height: 12.0),
+          Tasks()
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(

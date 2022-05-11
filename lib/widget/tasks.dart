@@ -1,5 +1,4 @@
 import 'package:demo_app/model/event_data_source.dart';
-import 'package:demo_app/page/event_page.dart';
 import 'package:demo_app/provider/event_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +28,7 @@ class _TasksState extends State<Tasks> {
 
     return SfCalendar(
       view: CalendarView.timelineDay,
-      dataSource: EventDataSource(provider.events),
+      dataSource: EventDataSource(provider.eventsOfSelectedDate),
       initialDisplayDate: provider.selectedDate,
       appointmentBuilder: appointmentBuilder,
       headerHeight: 0,
@@ -41,13 +40,6 @@ class _TasksState extends State<Tasks> {
         if (details.appointments == null) return;
 
         final event = details.appointments!.first;
-
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => EventPage(
-            event: event,
-            selectedDay: DateTime.now(),
-          ),
-        ));
       },
     );
   }
