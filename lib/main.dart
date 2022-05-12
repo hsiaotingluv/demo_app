@@ -9,18 +9,9 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  print("first");
   await Hive.initFlutter();
-  print("second");
   Hive.registerAdapter(EventAdapter());
-  print("third");
   await Hive.openBox<Event>('eventBox');
-  print("forth");
-
-  // box.put(
-  //   'eventData',
-  //   EventData(events: events),
-  // );
   runApp(const MyApp());
 }
 
@@ -53,7 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EventProvider>(context, listen: false);
-
     final box = Hive.box<Event>('eventBox');
     provider.clearEvent();
     List<Event> events = box.values.toList();

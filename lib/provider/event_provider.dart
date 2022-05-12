@@ -1,4 +1,3 @@
-import 'package:demo_app/model/event.dart';
 import 'package:demo_app/model/event_data.dart';
 import 'package:flutter/cupertino.dart';
 

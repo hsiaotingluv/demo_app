@@ -1,8 +1,6 @@
-import 'package:demo_app/main.dart';
 import 'package:demo_app/model/event_data.dart';
 import 'package:demo_app/provider/event_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:demo_app/model/event.dart';
 import 'package:demo_app/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -241,23 +239,12 @@ class _EventPageState extends State<EventPage> {
         isAllDay: isWholeDay,
       );
 
-      print("here");
-
       final provider = Provider.of<EventProvider>(context, listen: false);
-      // final int key = provider.length();
-      final int key = 1;
+      final int key = provider.length();
       provider.addEvent(event);
-      print('$key hello');
-
-      // final eventBox = Hive.box<Event>('eventBox');
 
       final box = Hive.box<Event>('eventBox');
       await box.put(key.toString(), event);
-      // await eventBox.put(
-      //   'eventData',
-      //   EventData(event: event),
-      // );
-      print("Success!");
 
       Navigator.of(context).pop();
     }
