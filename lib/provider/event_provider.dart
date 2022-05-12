@@ -1,8 +1,9 @@
 import 'package:demo_app/model/event.dart';
+import 'package:demo_app/model/event_data.dart';
 import 'package:flutter/cupertino.dart';
 
 class EventProvider extends ChangeNotifier {
-  final List<Event> _events = [];
+  List<Event> _events = [];
   DateTime _selectedDate = DateTime.now();
 
   List<Event> get events => _events;
@@ -18,5 +19,21 @@ class EventProvider extends ChangeNotifier {
     _events.add(event);
 
     notifyListeners();
+  }
+
+  void appendEvent(List<Event> event) {
+    _events.addAll(event);
+  }
+
+  void clearEvent() {
+    _events = [];
+  }
+
+  int length() {
+    if (_events.length == null) {
+      return 0;
+    } else {
+      return _events.length;
+    }
   }
 }

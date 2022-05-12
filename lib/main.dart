@@ -1,9 +1,26 @@
+import 'package:demo_app/model/event_data.dart';
 import 'package:demo_app/provider/event_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app/widget/navigation_drawer_widget.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+// late Box<Event> box;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  print("first");
+  await Hive.initFlutter();
+  print("second");
+  Hive.registerAdapter(EventAdapter());
+  print("third");
+  await Hive.openBox<Event>('eventBox');
+  print("forth");
+
+  // box.put(
+  //   'eventData',
+  //   EventData(events: events),
+  // );
   runApp(const MyApp());
 }
 
@@ -35,6 +52,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<EventProvider>(context, listen: false);
+
+    final box = Hive.box<Event>('eventBox');
+    provider.clearEvent();
+    List<Event> events = box.values.toList();
+    provider.appendEvent(events);
+
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(

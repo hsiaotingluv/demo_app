@@ -57,7 +57,7 @@ class _TasksState extends State<Tasks> {
       width: details.bounds.width,
       height: details.bounds.height,
       decoration: BoxDecoration(
-        color: event.backgroundColor.withOpacity(0.5),
+        color: Color(event.backgroundColor),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

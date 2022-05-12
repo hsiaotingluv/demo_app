@@ -1,7 +1,10 @@
+import 'package:demo_app/main.dart';
+import 'package:demo_app/model/event_data.dart';
 import 'package:demo_app/provider/event_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app/model/event.dart';
 import 'package:demo_app/utils.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
 class EventPage extends StatefulWidget {
@@ -44,12 +47,12 @@ class _EventPageState extends State<EventPage> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('Event'),
+          title: const Text('Event'),
           centerTitle: true,
           backgroundColor: Colors.orange,
         ),
         body: SingleChildScrollView(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             child: Form(
               key: _formKey,
               child: Column(
@@ -68,7 +71,7 @@ class _EventPageState extends State<EventPage> {
                         : null,
                     controller: titleController,
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   buildFromAndTo(),
                   CheckboxListTile(
                     controlAffinity: ListTileControlAffinity.leading,
@@ -80,11 +83,11 @@ class _EventPageState extends State<EventPage> {
                       });
                     },
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   // save button
                   FloatingActionButton.extended(
                     onPressed: saveForm,
-                    label: Text("Save"),
+                    label: const Text("Save"),
                   ),
                 ],
               ),
@@ -234,11 +237,27 @@ class _EventPageState extends State<EventPage> {
         description: 'Description',
         from: fromDate,
         to: toDate,
+        backgroundColor: Colors.lightBlue.value,
         isAllDay: isWholeDay,
       );
 
+      print("here");
+
       final provider = Provider.of<EventProvider>(context, listen: false);
+      // final int key = provider.length();
+      final int key = 1;
       provider.addEvent(event);
+      print('$key hello');
+
+      // final eventBox = Hive.box<Event>('eventBox');
+
+      final box = Hive.box<Event>('eventBox');
+      await box.put(key.toString(), event);
+      // await eventBox.put(
+      //   'eventData',
+      //   EventData(event: event),
+      // );
+      print("Success!");
 
       Navigator.of(context).pop();
     }

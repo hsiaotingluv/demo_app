@@ -7,6 +7,8 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:demo_app/model/event_data_source.dart';
 
 class CalendarPage extends StatefulWidget {
+  const CalendarPage({Key? key}) : super(key: key);
+
   @override
   State<CalendarPage> createState() => _CalendarPageState();
 }
