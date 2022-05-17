@@ -58,6 +58,7 @@ class _EventPageState extends State<EventPage> {
                 children: <Widget>[
                   // title
                   TextFormField(
+                    key: Key("addField"),
                     style: TextStyle(fontSize: 24),
                     decoration: InputDecoration(
                       border: UnderlineInputBorder(),
@@ -72,6 +73,7 @@ class _EventPageState extends State<EventPage> {
                   const SizedBox(height: 12),
                   buildFromAndTo(),
                   CheckboxListTile(
+                    key: Key("checkBox"),
                     controlAffinity: ListTileControlAffinity.leading,
                     title: Text("Whole Day"),
                     value: isWholeDay,
@@ -84,6 +86,7 @@ class _EventPageState extends State<EventPage> {
                   const SizedBox(height: 12),
                   // save button
                   FloatingActionButton.extended(
+                    key: Key("saveButton"),
                     onPressed: saveForm,
                     label: const Text("Save"),
                   ),
@@ -101,6 +104,7 @@ class _EventPageState extends State<EventPage> {
             Expanded(
               flex: 2,
               child: buildDropDownField(
+                key: Key("fromDate"),
                 text: Utils.extractDate(fromDate),
                 onClicked: () => pickFromDateTime(isDate: true),
               ),
@@ -108,6 +112,7 @@ class _EventPageState extends State<EventPage> {
             if (!isWholeDay)
               Expanded(
                 child: buildDropDownField(
+                  key: Key("fromTime"),
                   text: Utils.extractTime(fromDate),
                   onClicked: () => pickFromDateTime(isDate: false),
                 ),
@@ -120,6 +125,7 @@ class _EventPageState extends State<EventPage> {
             Expanded(
               flex: 2,
               child: buildDropDownField(
+                key: Key("toDate"),
                 text: Utils.extractDate(toDate),
                 onClicked: () => pickToDateTime(isDate: true),
               ),
@@ -127,6 +133,7 @@ class _EventPageState extends State<EventPage> {
             if (!isWholeDay)
               Expanded(
                 child: buildDropDownField(
+                  key: Key("toTime"),
                   text: Utils.extractTime(toDate),
                   onClicked: () => pickToDateTime(isDate: false),
                 ),
@@ -137,6 +144,7 @@ class _EventPageState extends State<EventPage> {
 
   // drop down option for date and time selection
   Widget buildDropDownField({
+    Key? key,
     required String text,
     required VoidCallback onClicked,
   }) =>
