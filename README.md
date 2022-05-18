@@ -20,6 +20,26 @@ Navigate to http://localhost:8080 in your browser; the search function should no
 
 <img width="1675" alt="Screenshot 2022-05-18 at 4 27 46 PM" src="https://user-images.githubusercontent.com/68311371/168994063-ff64b148-f996-49ed-b9fa-f4933bbcc126.png">
 
+# Testing
+Run the below command lines to generate coverage report.
+
+```
+# Remove generated file from coverage report
+dart global run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '.g.dart$'
+
+# Generate `coverage/lcov.info` file
+flutter test --coverage
+
+# Generate HTML report
+# Note: on macOS you need to have lcov installed on your system (`brew install lcov`) to use this:
+genhtml coverage/lcov.info -o coverage/html
+
+# Open the report
+open coverage/html/index.html
+```
+
+
+
 # Requirements
 
 ## Home Page:
