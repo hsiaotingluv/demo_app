@@ -18,6 +18,7 @@ $ dhttpd --path doc/api
 ```
 Navigate to http://localhost:8080 in your browser; the search function should now work.
 
+<img width="1675" alt="Screenshot 2022-05-18 at 4 27 46 PM" src="https://user-images.githubusercontent.com/68311371/168994063-ff64b148-f996-49ed-b9fa-f4933bbcc126.png">
 
 # Requirements
 
