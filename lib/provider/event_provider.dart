@@ -29,10 +29,6 @@ class EventProvider extends ChangeNotifier {
   }
 
   int length() {
-    if (_events.length == null) {
-      return 0;
-    } else {
-      return _events.length;
-    }
+    return _events.length;
   }
 }
