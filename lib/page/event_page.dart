@@ -102,17 +102,17 @@ class _EventPageState extends State<EventPage> {
         Row(
           children: [
             Expanded(
+              key: Key("fromDate"),
               flex: 2,
               child: buildDropDownField(
-                key: Key("fromDate"),
                 text: Utils.extractDate(fromDate),
                 onClicked: () => pickFromDateTime(isDate: true),
               ),
             ),
             if (!isWholeDay)
               Expanded(
+                key: Key("fromTime"),
                 child: buildDropDownField(
-                  key: Key("fromTime"),
                   text: Utils.extractTime(fromDate),
                   onClicked: () => pickFromDateTime(isDate: false),
                 ),
@@ -123,17 +123,17 @@ class _EventPageState extends State<EventPage> {
         Row(
           children: [
             Expanded(
+              key: Key("toDate"),
               flex: 2,
               child: buildDropDownField(
-                key: Key("toDate"),
                 text: Utils.extractDate(toDate),
                 onClicked: () => pickToDateTime(isDate: true),
               ),
             ),
             if (!isWholeDay)
               Expanded(
+                key: Key("toTime"),
                 child: buildDropDownField(
-                  key: Key("toTime"),
                   text: Utils.extractTime(toDate),
                   onClicked: () => pickToDateTime(isDate: false),
                 ),
@@ -144,7 +144,6 @@ class _EventPageState extends State<EventPage> {
 
   // drop down option for date and time selection
   Widget buildDropDownField({
-    Key? key,
     required String text,
     required VoidCallback onClicked,
   }) =>
