@@ -31,10 +31,12 @@ class _CalendarPageState extends State<CalendarPage> {
           Expanded(
             child: SfCalendar(
               view: CalendarView.month,
+              // Populate data to mark calendar with events visible as dots
               dataSource: EventDataSource(provider.events),
               initialSelectedDate: DateTime.now(),
               cellBorderColor: Colors.transparent,
               onTap: (CalendarTapDetails details) {
+                // View events of a selected date
                 provider.setDate = details.date!;
                 _dayTimelineController.displayDate = details.date!;
               },

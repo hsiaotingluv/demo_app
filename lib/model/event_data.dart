@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:hive/hive.dart';
 part 'event_data.g.dart';
 

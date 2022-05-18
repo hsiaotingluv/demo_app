@@ -22,9 +22,9 @@ class EventPage extends StatefulWidget {
 class _EventPageState extends State<EventPage> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
-  late DateTime fromDate;
-  late DateTime toDate;
-  bool isWholeDay = false;
+  late DateTime fromDate; // Event starting date and time
+  late DateTime toDate; // Event ending date and time
+  bool isWholeDay = false; // Check if event is whole day
 
   @override
   void initState() {
@@ -32,6 +32,7 @@ class _EventPageState extends State<EventPage> {
 
     if (widget.event == null) {
       fromDate = widget.selectedDay;
+      // Set ending time to be 2hrs after the starting time by default
       toDate = widget.selectedDay.add(const Duration(hours: 2));
     }
   }
@@ -56,7 +57,7 @@ class _EventPageState extends State<EventPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  // title
+                  // Event title
                   TextFormField(
                     key: const Key("addField"),
                     style: const TextStyle(fontSize: 24),
@@ -64,14 +65,16 @@ class _EventPageState extends State<EventPage> {
                       border: UnderlineInputBorder(),
                       hintText: 'Add Title',
                     ),
-                    onFieldSubmitted: (_) => saveForm(),
+                    onFieldSubmitted: (_) => saveForm(), // Save event
                     validator: (title) => title != null && title.isEmpty
                         ? 'Title cannot be empty'
                         : null,
                     controller: titleController,
                   ),
                   const SizedBox(height: 12),
+                  // Event starting and ending date and time
                   buildFromAndTo(),
+                  // Check box for whole day event
                   CheckboxListTile(
                     key: const Key("checkBox"),
                     controlAffinity: ListTileControlAffinity.leading,
@@ -84,7 +87,7 @@ class _EventPageState extends State<EventPage> {
                     },
                   ),
                   const SizedBox(height: 12),
-                  // save button
+                  // Saves button
                   FloatingActionButton.extended(
                     key: const Key("saveButton"),
                     onPressed: saveForm,
@@ -95,12 +98,13 @@ class _EventPageState extends State<EventPage> {
             )),
       );
 
-  // event ending date and time
+  // Widget for selecting event starting and ending date and time
   Widget buildFromAndTo() =>
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Text('FROM', style: TextStyle(fontWeight: FontWeight.bold)),
         Row(
           children: [
+            // Sets event starting date
             Expanded(
               key: const Key("fromDate"),
               flex: 2,
@@ -109,6 +113,8 @@ class _EventPageState extends State<EventPage> {
                 onClicked: () => pickFromDateTime(isDate: true),
               ),
             ),
+            // Sets event starting time if event is not whole day
+            // Else, if event is whole day, start time selection not visible
             if (!isWholeDay)
               Expanded(
                 key: const Key("fromTime"),
@@ -122,6 +128,7 @@ class _EventPageState extends State<EventPage> {
         const Text('TO', style: TextStyle(fontWeight: FontWeight.bold)),
         Row(
           children: [
+            // Set event ending date
             Expanded(
               key: const Key("toDate"),
               flex: 2,
@@ -130,6 +137,8 @@ class _EventPageState extends State<EventPage> {
                 onClicked: () => pickToDateTime(isDate: true),
               ),
             ),
+            // Sets event ending time if event is not whole day
+            // Else, if event is whole day, end time selection not visible
             if (!isWholeDay)
               Expanded(
                 key: const Key("toTime"),
@@ -142,7 +151,7 @@ class _EventPageState extends State<EventPage> {
         ),
       ]);
 
-  // drop down option for date and time selection
+  // Widget for drop down button
   Widget buildDropDownField({
     required String text,
     required VoidCallback onClicked,
@@ -153,7 +162,7 @@ class _EventPageState extends State<EventPage> {
         onTap: onClicked,
       );
 
-  // set the event starting date and time
+  // Sets event ending date and time to be after starting date and time
   Future pickFromDateTime({required bool isDate}) async {
     final date = await pickDateTime(
       fromDate,
@@ -174,7 +183,7 @@ class _EventPageState extends State<EventPage> {
     setState(() => fromDate = date);
   }
 
-  // set the event ending date and time
+  // Sets the event ending date and time
   Future pickToDateTime({required bool isDate}) async {
     final date = await pickDateTime(
       toDate,
@@ -186,13 +195,13 @@ class _EventPageState extends State<EventPage> {
     setState(() => toDate = date);
   }
 
-  // flutter date and time picker
+  // Sets date and time using showDatepicker and showTimePicker
   Future<DateTime?> pickDateTime(
     DateTime initialDate, {
     required bool isDate,
     DateTime? firstDate,
   }) async {
-    // pick a date
+    // Picks a date
     if (isDate) {
       final date = await showDatePicker(
         context: context,
@@ -210,7 +219,7 @@ class _EventPageState extends State<EventPage> {
 
       return date.add(time);
     } else {
-      // pick a time
+      // Picks a time
       final timeOfDay = await showTimePicker(
         context: context,
         initialTime: TimeOfDay.fromDateTime(initialDate),
@@ -233,6 +242,7 @@ class _EventPageState extends State<EventPage> {
     }
   }
 
+  // Saves event
   Future saveForm() async {
     final isValid = _formKey.currentState!.validate();
 
@@ -250,6 +260,7 @@ class _EventPageState extends State<EventPage> {
       final int key = provider.length();
       provider.addEvent(event);
 
+      // Saves event to database
       final box = Hive.box<Event>('eventBox');
       await box.put(key.toString(), event);
 
