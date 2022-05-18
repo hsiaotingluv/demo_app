@@ -5,8 +5,6 @@ import 'package:demo_app/widget/navigation_drawer_widget.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 
-// late Box<Event> box;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
@@ -44,9 +42,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<EventProvider>(context, listen: false);
-    final box = Hive.box<Event>('eventBox');
-    provider.clearEvent();
-    List<Event> events = box.values.toList();
+    final box = Hive.box<Event>('eventBox'); // Initialise hive database
+    provider.clearEvent(); // Ensures any exisitng events are cleared
+    List<Event> events = box.values.toList(); // Loads events from database
+    // Append database events to current list of events to be shown on calendar
     provider.appendEvent(events);
 
     return Scaffold(
