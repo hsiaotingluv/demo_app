@@ -5,6 +5,19 @@ A new Flutter Calendar App that allows users to add events and view their schedu
 <img width="380" alt="Screenshot 2022-05-18 at 12 34 13 PM" src="https://user-images.githubusercontent.com/68311371/168958083-1307a277-aeea-4386-a93e-3c909879195a.png">
 <img width="384" alt="Screenshot 2022-05-18 at 12 33 41 PM" src="https://user-images.githubusercontent.com/68311371/168958104-a4ae2e30-ed8f-472b-b50d-458e2ef565fc.png">
 
+# Documentation
+By default, the documentation is generated to the `doc/api` directory as static HTML files. Run `dart help doc` to see the available command-line options.
+
+You can view the generated docs directly from the file system, but if you want to use the search function, you must load them with an HTTP server.
+
+An easy way to run an HTTP server locally is to use the `dhttpd` package. For example:
+
+```
+$ dart pub global activate dhttpd
+$ dhttpd --path doc/api
+```
+Navigate to http://localhost:8080 in your browser; the search function should now work.
+
 
 # Requirements
 
