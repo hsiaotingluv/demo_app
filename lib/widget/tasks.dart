@@ -20,7 +20,7 @@ class _TasksState extends State<Tasks> {
     final selectedEvents = provider.eventsOfSelectedDate;
 
     if (selectedEvents.isEmpty) {
-      return Center(
+      return const Center(
         child: Text(
           'No Events found!',
           style: TextStyle(color: Colors.black),
@@ -36,13 +36,11 @@ class _TasksState extends State<Tasks> {
       appointmentBuilder: appointmentBuilder,
       headerHeight: 0,
       todayHighlightColor: Colors.black,
-      selectionDecoration: BoxDecoration(
+      selectionDecoration: const BoxDecoration(
         color: Colors.transparent,
       ),
       onTap: (details) {
         if (details.appointments == null) return;
-
-        final event = details.appointments!.first;
       },
     );
   }
@@ -64,7 +62,7 @@ class _TasksState extends State<Tasks> {
         event.title,
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.black,
           fontSize: 16,
           fontWeight: FontWeight.bold,

@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  // testWidgets('event data source ...', (tester) async {
-  //   // TODO: Implement test
-  // });
-
   late EventDataSource sut; // system under test
   late Event event1;
   late Event event2;

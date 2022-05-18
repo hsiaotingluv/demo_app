@@ -55,19 +55,17 @@ void main() {
               drawer: Drawer(
                 child: ListView(
                   children: <Widget>[
-                    Container(
-                      child: Column(children: [
-                        const Text('drawer'),
-                        TextButton(
-                          child: const Text('Calendar'),
-                          onPressed: () => isCalendar = true,
-                        ),
-                        TextButton(
-                          child: const Text('Event'),
-                          onPressed: () => isEvent = true,
-                        ),
-                      ]),
-                    )
+                    Column(children: [
+                      const Text('drawer'),
+                      TextButton(
+                        child: const Text('Calendar'),
+                        onPressed: () => isCalendar = true,
+                      ),
+                      TextButton(
+                        child: const Text('Event'),
+                        onPressed: () => isEvent = true,
+                      ),
+                    ])
                   ],
                 ),
               ),

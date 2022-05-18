@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     provider.appendEvent(events);
 
     return Scaffold(
-      drawer: NavigationDrawerWidget(),
+      drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
         title: Text(widget.title),
       ),

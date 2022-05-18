@@ -58,9 +58,9 @@ class _EventPageState extends State<EventPage> {
                 children: <Widget>[
                   // title
                   TextFormField(
-                    key: Key("addField"),
-                    style: TextStyle(fontSize: 24),
-                    decoration: InputDecoration(
+                    key: const Key("addField"),
+                    style: const TextStyle(fontSize: 24),
+                    decoration: const InputDecoration(
                       border: UnderlineInputBorder(),
                       hintText: 'Add Title',
                     ),
@@ -73,9 +73,9 @@ class _EventPageState extends State<EventPage> {
                   const SizedBox(height: 12),
                   buildFromAndTo(),
                   CheckboxListTile(
-                    key: Key("checkBox"),
+                    key: const Key("checkBox"),
                     controlAffinity: ListTileControlAffinity.leading,
-                    title: Text("Whole Day"),
+                    title: const Text("Whole Day"),
                     value: isWholeDay,
                     onChanged: (_) {
                       setState(() {
@@ -86,7 +86,7 @@ class _EventPageState extends State<EventPage> {
                   const SizedBox(height: 12),
                   // save button
                   FloatingActionButton.extended(
-                    key: Key("saveButton"),
+                    key: const Key("saveButton"),
                     onPressed: saveForm,
                     label: const Text("Save"),
                   ),
@@ -102,7 +102,7 @@ class _EventPageState extends State<EventPage> {
         Row(
           children: [
             Expanded(
-              key: Key("fromDate"),
+              key: const Key("fromDate"),
               flex: 2,
               child: buildDropDownField(
                 text: Utils.extractDate(fromDate),
@@ -111,7 +111,7 @@ class _EventPageState extends State<EventPage> {
             ),
             if (!isWholeDay)
               Expanded(
-                key: Key("fromTime"),
+                key: const Key("fromTime"),
                 child: buildDropDownField(
                   text: Utils.extractTime(fromDate),
                   onClicked: () => pickFromDateTime(isDate: false),
@@ -123,7 +123,7 @@ class _EventPageState extends State<EventPage> {
         Row(
           children: [
             Expanded(
-              key: Key("toDate"),
+              key: const Key("toDate"),
               flex: 2,
               child: buildDropDownField(
                 text: Utils.extractDate(toDate),
@@ -132,7 +132,7 @@ class _EventPageState extends State<EventPage> {
             ),
             if (!isWholeDay)
               Expanded(
-                key: Key("toTime"),
+                key: const Key("toTime"),
                 child: buildDropDownField(
                   text: Utils.extractTime(toDate),
                   onClicked: () => pickToDateTime(isDate: false),

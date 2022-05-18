@@ -1,6 +1,5 @@
 import 'package:demo_app/model/event_data.dart';
 import 'package:demo_app/page/event_page.dart';
-import 'package:demo_app/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
@@ -9,8 +8,6 @@ void main() {
   late EventPage sut;
   late Event event;
   late DateTime selectedDay;
-  late DateTime fromDate;
-  late DateTime toDate;
 
   setUp(() {
     event = Event(
@@ -26,8 +23,6 @@ void main() {
       event: event,
       selectedDay: selectedDay,
     );
-    fromDate = DateTime.now();
-    toDate = DateTime.now();
   });
 
   group("Initial values are correct", () {
@@ -48,7 +43,7 @@ void main() {
   group("Add Title", () {
     testWidgets('Valid event name', (tester) async {
       // find all widgets needed
-      final addField = find.byKey(ValueKey("addField"));
+      final addField = find.byKey(const ValueKey("addField"));
 
       // execute the actual test
       await tester.pumpWidget(
@@ -65,7 +60,7 @@ void main() {
 
     testWidgets('Invalid event name', (tester) async {
       // find all widgets needed
-      final addField = find.byKey(ValueKey("addField"));
+      final addField = find.byKey(const ValueKey("addField"));
 
       // execute the actual test
       await tester.pumpWidget(
@@ -83,7 +78,7 @@ void main() {
 
   testWidgets('Check box toggle', (tester) async {
     // find all widgets needed
-    final checkboxFinder = find.byKey(ValueKey("checkBox"));
+    final checkboxFinder = find.byKey(const ValueKey("checkBox"));
 
     // execute the actual test
     await tester.pumpWidget(
@@ -105,13 +100,11 @@ void main() {
     expect(checkbox.value, true);
   });
 
-  toDate = DateTime.now().add(const Duration(hours: 2));
-
   testWidgets('Event page content', (tester) async {
     // find all widgets needed
-    final addField = find.byKey(ValueKey("addField"));
-    final checkboxFinder = find.byKey(ValueKey("checkBox"));
-    final saveButton = find.byKey(ValueKey("saveButton"));
+    final addField = find.byKey(const ValueKey("addField"));
+    final checkboxFinder = find.byKey(const ValueKey("checkBox"));
+    final saveButton = find.byKey(const ValueKey("saveButton"));
 
     // execute the actual test
     await tester.pumpWidget(
@@ -126,22 +119,10 @@ void main() {
     expect(saveButton, findsOneWidget);
   });
 
-  Future<void> prepareDatePicker(
-    Finder finder,
-    WidgetTester tester,
-    Future<void> Function(Future<DateTime?> date) callback,
-  ) async {
-    await tester.pumpWidget(MaterialApp(
-      home: EventPage(selectedDay: selectedDay),
-    ));
-    await tester.tap(finder);
-    await tester.pump();
-  }
-
   group('showDateTimePicker', () {
     testWidgets('showDatePicker date content, with cancel, ok options',
         (tester) async {
-      final Finder fromDate = find.byKey(ValueKey("fromDate"));
+      final Finder fromDate = find.byKey(const ValueKey("fromDate"));
 
       await tester.pumpWidget(MaterialApp(
         home: EventPage(selectedDay: selectedDay),
@@ -171,7 +152,7 @@ void main() {
 
     testWidgets('showDatePicker time content, with cancel, ok options',
         (tester) async {
-      final Finder fromTime = find.byKey(ValueKey("fromTime"));
+      final Finder fromTime = find.byKey(const ValueKey("fromTime"));
 
       await tester.pumpWidget(MaterialApp(
         home: EventPage(selectedDay: selectedDay),
@@ -200,7 +181,7 @@ void main() {
     });
 
     testWidgets('Initial date is default to selected day', (tester) async {
-      final Finder fromDate = find.byKey(ValueKey("fromDate"));
+      final Finder fromDate = find.byKey(const ValueKey("fromDate"));
       String dateString = DateFormat.MMMEd().format(selectedDay);
 
       await tester.pumpWidget(MaterialApp(
@@ -213,7 +194,7 @@ void main() {
     });
 
     testWidgets('Initial time is default to current time', (tester) async {
-      final Finder fromTime = find.byKey(ValueKey("fromTime"));
+      final Finder fromTime = find.byKey(const ValueKey("fromTime"));
       String timeString = DateFormat.Hm().format(DateTime.now());
 
       await tester.pumpWidget(MaterialApp(
@@ -225,8 +206,8 @@ void main() {
       expect(find.text(timeString), findsOneWidget);
     });
 
-    testWidgets('Can select a date', (tester) async {
-      final Finder fromDate = find.byKey(ValueKey("fromDate"));
+    testWidgets('Can select starting date', (tester) async {
+      final Finder fromDate = find.byKey(const ValueKey("fromDate"));
       String dateStringWithYear = DateFormat.yMMMEd().format(selectedDay);
 
       await tester.pumpWidget(MaterialApp(
@@ -240,8 +221,8 @@ void main() {
       expect(find.text(dateStringWithYear), findsWidgets);
     });
 
-    testWidgets('Can select a time', (tester) async {
-      final Finder fromTime = find.byKey(ValueKey("fromTime"));
+    testWidgets('Can select starting time', (tester) async {
+      final Finder fromTime = find.byKey(const ValueKey("fromTime"));
       String timeString = DateFormat.Hm().format(DateTime.now());
 
       await tester.pumpWidget(MaterialApp(
@@ -255,8 +236,38 @@ void main() {
       expect(find.text(timeString), findsWidgets);
     });
 
+    testWidgets('Can select ending date', (tester) async {
+      final Finder toDate = find.byKey(const ValueKey("toDate"));
+      String dateStringWithYear = DateFormat.yMMMEd().format(selectedDay);
+
+      await tester.pumpWidget(MaterialApp(
+        home: EventPage(selectedDay: selectedDay),
+      ));
+
+      await tester.tap(toDate);
+      await tester.pump();
+      await tester.tap(find.text('OK'));
+      await tester.pump();
+      expect(find.text(dateStringWithYear), findsWidgets);
+    });
+
+    testWidgets('Can select ending time', (tester) async {
+      final Finder toTime = find.byKey(const ValueKey("toTime"));
+      String timeString = DateFormat.Hm().format(DateTime.now());
+
+      await tester.pumpWidget(MaterialApp(
+        home: EventPage(selectedDay: selectedDay),
+      ));
+
+      await tester.tap(toTime);
+      await tester.pump();
+      await tester.tap(find.text('OK'));
+      await tester.pump();
+      expect(find.text(timeString), findsWidgets);
+    });
+
     testWidgets('End date is same or later than start date', (tester) async {
-      final Finder fromDate = find.byKey(ValueKey("fromDate"));
+      final Finder fromDate = find.byKey(const ValueKey("fromDate"));
 
       await tester.pumpWidget(MaterialApp(
         home: EventPage(selectedDay: selectedDay),
@@ -280,7 +291,7 @@ void main() {
     });
 
     testWidgets('End time is same or later than start time', (tester) async {
-      final Finder fromTime = find.byKey(ValueKey("fromTime"));
+      final Finder fromTime = find.byKey(const ValueKey("fromTime"));
       final String minute = DateFormat.m().format(selectedDay);
       await tester.pumpWidget(MaterialApp(
         home: EventPage(selectedDay: selectedDay),
@@ -302,6 +313,16 @@ void main() {
       // find exactly 2 same time
       // toTime set to same as fromTime
       expect(find.text(newTime24), findsNWidgets(2));
+    });
+  });
+
+  group("Save Form", () {
+    testWidgets("Save button visible", (tester) async {
+      await tester.pumpWidget(MaterialApp(
+        home: EventPage(selectedDay: selectedDay),
+      ));
+
+      expect(find.text('Save'), findsOneWidget);
     });
   });
 }
