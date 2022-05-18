@@ -19,6 +19,7 @@ class _TasksState extends State<Tasks> {
     final provider = Provider.of<EventProvider>(context);
     final selectedEvents = provider.eventsOfSelectedDate;
 
+    // If no events currently, shows text 'No Events found!'
     if (selectedEvents.isEmpty) {
       return const Center(
         child: Text(
@@ -31,6 +32,7 @@ class _TasksState extends State<Tasks> {
     return SfCalendar(
       controller: widget._controller,
       view: CalendarView.timelineDay,
+      // Shows all events on selected date by default
       dataSource: EventDataSource(provider.eventsOfSelectedDate),
       initialDisplayDate: provider.selectedDate,
       appointmentBuilder: appointmentBuilder,

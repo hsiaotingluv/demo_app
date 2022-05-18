@@ -39,6 +39,7 @@ class NavigationDrawerWidget extends StatelessWidget {
     );
   }
 
+  // Widget for the options in menu
   Widget buildMenuItem({
     required String text,
     required IconData icon,
@@ -55,6 +56,7 @@ class NavigationDrawerWidget extends StatelessWidget {
     );
   }
 
+  // Navigates to the selected page
   void selectedItem(BuildContext context, int index) {
     Navigator.of(context).pop();
 
